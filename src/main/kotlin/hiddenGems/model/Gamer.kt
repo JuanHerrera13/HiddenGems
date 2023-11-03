@@ -1,5 +1,6 @@
 package hiddenGems.model
 
+import java.util.*
 import kotlin.random.Random
 
 data class Gamer(var name: String, var email: String) {
@@ -14,6 +15,7 @@ data class Gamer(var name: String, var email: String) {
                 generateId()
             }
         }
+    val searchedGames = mutableListOf<Game?>()
 
     constructor(name: String, email: String, birthDate: String, userName: String) :
             this(name, email) {
@@ -45,6 +47,26 @@ data class Gamer(var name: String, var email: String) {
     fun validateName(name: String?) {
         if (name.isNullOrBlank()) {
             throw IllegalAccessError("The name is blank!")
+        }
+    }
+
+    companion object {
+        fun createGamer(scanner: Scanner): Gamer {
+            println("- - - Welcome to HiddenGems - - - \nLets gonna make your registry!\nType your name: ")
+            val name = scanner.nextLine()
+            println("Type your e-mail:")
+            val email = scanner.nextLine()
+            println("Would you like to complete your registry with user and date of birth? (Y/N)")
+            val answer = scanner.nextLine()
+            if (answer.equals("Y", true)) {
+                println("Type your day of birth(DD/MM/YYYY):")
+                val birthDate = scanner.nextLine()
+                println("Type your username:")
+                val userName = scanner.nextLine()
+                return Gamer(name, email, birthDate, userName)
+            } else {
+                return Gamer(name, email)
+            }
         }
     }
 
